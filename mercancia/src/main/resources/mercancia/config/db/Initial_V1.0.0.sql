@@ -1,3 +1,13 @@
+CREATE DATABASE nexos
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Spain.1252'
+    LC_CTYPE = 'Spanish_Spain.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+    
+
 create table producto(
 nombre_producto varchar (80) not null,
 cantidad int not null,
