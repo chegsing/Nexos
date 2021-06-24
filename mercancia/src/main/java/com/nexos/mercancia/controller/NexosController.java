@@ -60,11 +60,10 @@ public class NexosController {
 	@PutMapping (value = "/updateProductos")
 	public String updateProducto(@Valid @RequestBody ProductoUser productoUser) {
 		
-		String nombreProducto = "";
-		nombreProducto =nexoService.updateProductoUser(productoUser);
+		boolean producto = nexoService.updateProductoUser(productoUser);
 		
 		
-		if (nombreProducto.isEmpty()) {
+		if (Boolean.FALSE.equals(producto)) {
 			return "producto no pudo ser insertado";
 		}else {
 			return "producto insertado correctamente";

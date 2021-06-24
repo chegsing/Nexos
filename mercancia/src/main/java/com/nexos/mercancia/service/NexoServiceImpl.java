@@ -9,6 +9,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +37,8 @@ public class NexoServiceImpl implements NexoService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
-	@Autowired
+	@Autowired(required = true)
+	@Qualifier("beanMapper")
 	NexoMapper nexoMapper;
 
 	@Override
@@ -90,9 +92,9 @@ public class NexoServiceImpl implements NexoService {
 	}
 
 	@Override
-	public String updateProductoUser(@Valid ProductoUser productoUser) {
+	public Boolean updateProductoUser(@Valid ProductoUser productoUser) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 }

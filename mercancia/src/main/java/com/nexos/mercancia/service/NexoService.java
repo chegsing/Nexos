@@ -18,5 +18,5 @@ public interface NexoService {
 
 	public List<Usuario> getUsuarios();
 
-	public String updateProductoUser(@Valid ProductoUser productoUser);
+	public Boolean updateProductoUser(@Valid ProductoUser productoUser);
 }
