@@ -37,14 +37,16 @@ public class NexoServiceImpl implements NexoService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
-	@Autowired(required = true)
-	@Qualifier("beanMapper")
+	@Autowired
 	NexoMapper nexoMapper;
 
 	@Override
 	public List<Producto> getProductos(String nombreProducto) {
-		
-		return productoRepository.findAllByNombreProductoIgnoreCase(nombreProducto);
+		if(productoRepository.findAllByNombreProductoIgnoreCase(nombreProducto).isEmpty()) {
+			throw new ValidationException("Product no Found");
+		}else {
+			return productoRepository.findAllByNombreProductoIgnoreCase(nombreProducto);
+		}
 	}
 
 	@Override

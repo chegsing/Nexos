@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.xml.bind.ValidationException;
 
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.nexos.mercancia.entity.Producto;
 import com.nexos.mercancia.entity.Usuario;
@@ -36,8 +39,13 @@ public class NexosController {
 	private NexoService nexoService;
 	
 	@GetMapping (value = "/productos")
-	public List<Producto> getProductos(@RequestParam (required = true) final String nombreProducto ) {
-		return nexoService.getProductos(nombreProducto);
+	public ResponseEntity<List<Producto>> getProductos(@RequestParam (required = true) final String nombreProducto, HttpServletResponse response ) {
+		try {
+			return new ResponseEntity<>(nexoService.getProductos(nombreProducto), HttpStatus.OK);
+		}catch(javax.validation.ValidationException ve) {
+			throw new ResponseStatusException(
+			           HttpStatus.NOT_FOUND, "Producto no Encontrado", ve);
+		}
 	}
 	
 	@PostMapping (value = "/productos")
@@ -47,7 +55,8 @@ public class NexosController {
 		try {
 			nombreProducto =nexoService.saveProductoUser(addProducto);
 		}catch(Exception ve) {
-			return "Producto Repetido";
+			throw new ResponseStatusException(
+			           HttpStatus.CONFLICT, "Producto ya existe", ve);
 		}
 		
 		if (nombreProducto.isEmpty()) {

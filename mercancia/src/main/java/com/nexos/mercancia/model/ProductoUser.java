@@ -4,19 +4,21 @@ import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nexos.mercancia.constants.NexosErrors;
 
 public class ProductoUser {
 	
-	@NotBlank(message = NexosErrors.REQUIRED)
+	
 	private String nombreProducto;
-	@NotBlank(message = NexosErrors.REQUIRED)
+	
 	private Integer cantidad;
-	@NotBlank(message = NexosErrors.REQUIRED)
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fechaIngreso;
-	@NotBlank(message = NexosErrors.REQUIRED)
+	
 	private String descripcion;
-	@NotBlank(message = NexosErrors.REQUIRED)
+	
 	private String usuarioId;
 	
 	public String getNombreProducto() {
