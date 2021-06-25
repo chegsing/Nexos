@@ -67,15 +67,15 @@ public class NexosController {
 	}
 	
 	@PutMapping (value = "/updateProductos")
-	public String updateProducto(@Valid @RequestBody ProductoUser productoUser) {
+	public ResponseEntity<String> updateProducto(@Valid @RequestBody ProductoUser productoUser) {
 		
 		boolean producto = nexoService.updateProductoUser(productoUser);
 		
 		
 		if (Boolean.FALSE.equals(producto)) {
-			return "producto no pudo ser insertado";
+			return new ResponseEntity<>("producto no pudo ser insertado", HttpStatus.BAD_REQUEST);
 		}else {
-			return "producto insertado correctamente";
+			return new ResponseEntity<>("producto insertado correctamente", HttpStatus.CREATED);
 		}
 	}
 	
